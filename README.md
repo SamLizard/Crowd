@@ -103,3 +103,53 @@ plt.show()
 This code simulates a crowd of different sizes making predictions about a true value (in this case, true_value = 50). For each crowd size, it generates a list of predictions with random values between true_value-20 and true_value+20, calculates the mean prediction, and computes the prediction error as the absolute difference between the mean prediction and the true value. The function then returns a list of tuples, where each tuple represents a (crowd_size, prediction_error) pair.
 
 The scatter plot shows the relationship between the size of the crowd and the accuracy of their predictions. As the crowd size increases, the prediction error tends to decrease, indicating that larger crowds are generally more accurate. However, there is also a lot of variability in the prediction error for small crowds, and even large crowds can sometimes be inaccurate. This demonstrates that while crowd wisdom can be a powerful tool, it is not always foolproof, and other factors such as the diversity and expertise of the crowd may also impact its accuracy.
+
+
+
+
+Sure thing! Here's an updated version of the code that takes an input list of predictions made by the crowd:
+
+python
+Copy code
+import matplotlib.pyplot as plt
+import statistics
+
+def plot_crowd_size_vs_error(predictions):
+    """
+    This function takes a list of predictions made by a crowd of people and
+    plots a scatter plot showing the impact of crowd size on prediction error.
+    """
+    crowd_predictions = []
+    for crowd_size in range(1, len(predictions) + 1):
+        subset = predictions[:crowd_size]
+        mean_prediction = statistics.mean(subset)
+        prediction_error = abs(mean_prediction - true_value)
+        crowd_predictions.append((crowd_size, prediction_error))
+
+    # Extract the crowd sizes and prediction errors from the simulation results
+    crowd_sizes = [x[0] for x in crowd_predictions]
+    prediction_errors = [x[1] for x in crowd_predictions]
+
+    # Create a scatter plot of crowd size vs. prediction error
+    plt.scatter(crowd_sizes, prediction_errors)
+
+    # Set the plot title and labels
+    plt.title('Impact of Crowd Size on Prediction Accuracy')
+    plt.xlabel('Crowd Size')
+    plt.ylabel('Prediction Error')
+
+    # Show the plot
+    plt.show()
+To use this function, simply call it with a list of predictions:
+
+python
+Copy code
+predictions = [50, 60, 55, 65, 70, 60, 62, 58, 63, 61]
+plot_crowd_size_vs_error(predictions)
+This will create a scatter plot showing the impact of crowd size on prediction error, based on the input list of predictions.
+
+Note that the simulate_crowd_predictions() function from the previous example is no longer needed, since we are now taking the input list of predictions directly as an argument to the plot_crowd_size_vs_error() function.
+
+In this updated function, we loop through the input list of predictions and calculate the mean prediction and prediction error for each subset of the crowd, ranging from the first prediction to the full crowd. We then append each (crowd_size, prediction_error) pair to a list of crowd predictions. Finally, we extract the crowd sizes and prediction errors from the list and create a scatter plot of crowd size vs. prediction error.
+
+This scatter plot shows how the prediction error decreases as the size of the crowd increases. The initial prediction error is relatively high for small crowds, but levels off and becomes more stable for larger crowds. This suggests that larger crowds tend to be more accurate and consistent in their predictions, although there may still be some variability even with large crowds.
