@@ -153,3 +153,46 @@ Note that the simulate_crowd_predictions() function from the previous example is
 In this updated function, we loop through the input list of predictions and calculate the mean prediction and prediction error for each subset of the crowd, ranging from the first prediction to the full crowd. We then append each (crowd_size, prediction_error) pair to a list of crowd predictions. Finally, we extract the crowd sizes and prediction errors from the list and create a scatter plot of crowd size vs. prediction error.
 
 This scatter plot shows how the prediction error decreases as the size of the crowd increases. The initial prediction error is relatively high for small crowds, but levels off and becomes more stable for larger crowds. This suggests that larger crowds tend to be more accurate and consistent in their predictions, although there may still be some variability even with large crowds.
+
+
+
+Sure, here's some code that will create a heat map of the crowd's predictions:
+
+python
+Copy code
+import matplotlib.pyplot as plt
+import numpy as np
+
+def plot_heatmap(predictions):
+    """
+    This function takes a list of predictions made by a crowd of people and
+    plots a heat map showing the concentration of predictions across a range of
+    possible values.
+    """
+    # Define the range of possible values for the number of jellybeans
+    min_val = min(predictions)
+    max_val = max(predictions)
+    x_vals = np.arange(min_val, max_val+1)
+
+    # Create a 2D histogram of the predictions
+    hist, _, _ = np.histogram2d(predictions, np.zeros(len(predictions)), bins=[x_vals, [0,1]])
+    
+    # Plot the heat map
+    plt.imshow(hist.T, cmap='Reds', origin='lower', extent=[min_val-0.5, max_val+0.5, 0, 1])
+
+    # Set the plot title and labels
+    plt.title('Concentration of Jellybean Predictions')
+    plt.xlabel('Number of Jellybeans')
+    plt.ylabel('Probability Density')
+
+    # Show the plot
+    plt.show()
+To use this function, simply call it with a list of predictions:
+
+python
+Copy code
+predictions = [50, 60, 55, 65, 70, 60, 62, 58, 63, 61]
+plot_heatmap(predictions)
+This will create a heat map showing the concentration of the crowd's predictions across a range of possible values for the number of jellybeans in the jar. The heat map will be colored according to the concentration of predictions in each cell of the grid, with darker colors indicating higher concentrations of predictions. The x-axis represents the possible range of values for the number of jellybeans in the jar, and the y-axis represents the probability density of predictions falling within each range.
+
+Note that the heat map can provide insights into where the crowd's predictions are most concentrated, which can help to identify the range of likely values for the number of jellybeans in the jar.
